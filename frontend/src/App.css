@@ -1,0 +1,42 @@
+@font-face {
+  font-family: Ethnocentric;
+  src: url(./assets/fonts/ethnocentric.otf);
+}
+
+.special-font {
+  font-family: Ethnocentric;
+}
+
+.header {
+  border-bottom: 2px solid #00b4bd;
+}
+.intro-section {
+  background: url("./assets/images/Stars.png") no-repeat;
+  background-size: 100%;
+  min-height: 800px;
+}
+.social-section {
+  background-color: #011e1f;
+  border-bottom: 8px solid #00b4bc;
+}
+.video-section {
+  background: url("./assets/images/video_section_frame_desktop.png") no-repeat;
+  background-size: 115%;
+  background-position: center center;
+}
+.video-desc {
+  background-image: linear-gradient(180deg, #1c1c1c 0%, #020202 100%);
+  border: 1px solid #252525;
+}
+@media screen and (max-width: 1040px) {
+  .video-section {
+    background-size: cover;
+  }
+}
+@media screen and (max-width: 768px) {
+  .video-section {
+    background: url("./assets/images/video_section_frame_mobile.png") no-repeat;
+    background-size: 100%;
+    background-position: center center;
+  }
+}
