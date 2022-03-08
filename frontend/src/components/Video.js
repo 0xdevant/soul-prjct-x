@@ -28,8 +28,8 @@ function Video() {
               Into the Metaverse…a multi-dimensional space for new creative
               expression, offers us a chance to bring in items we can’t live
               without- our passion for sound, our headphones. Introducing
-              SOUL&#174; PRJCT-X, our very own NFT community dedicated to our
-              history and fans to flex in and out of the Metaverse with
+              SOUL&#174; PRJCT-X, our very own NFT community dedicated to our 
+              fans to flex in and out of the Metaverse with
               SOUL&#174; products.
             </p>
           </div>
