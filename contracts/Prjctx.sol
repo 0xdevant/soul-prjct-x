@@ -6,7 +6,9 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract NFT is ERC721, Ownable {
+import "hardhat/console.sol";
+
+contract Prjctx is ERC721, Ownable {
     using Strings for uint256;
     using Counters for Counters.Counter;
 
@@ -16,8 +18,8 @@ contract NFT is ERC721, Ownable {
     string public uriSuffix = ".json";
     string public hiddenMetadataUri;
 
-    uint256 public cost = 1 ether;
-    uint256 public maxSupply = 10000;
+    uint256 public cost = 0.1 ether;
+    uint256 public maxSupply = 2022;
     uint256 public maxMintAmountPerTx = 20;
 
     bool public paused = true;
@@ -26,9 +28,7 @@ contract NFT is ERC721, Ownable {
 
     address[] public whitelistedAddresses;
 
-    constructor(string memory _name, string memory _symbol)
-        ERC721(_name, _symbol)
-    {
+    constructor() ERC721("PRJCT-X", "PRJCTX") {
         setHiddenMetadataUri("ipfs://__CID__/hidden.json");
     }
 
@@ -79,6 +79,11 @@ contract NFT is ERC721, Ownable {
         view
         returns (uint256[] memory)
     {
+        uint256 ownerTokenCount = balanceOf(_owner);
+        uint256[] memory ownedTokenIds = new uint256[](ownerTokenCount);
+        uint256 currentTokenId = 1;
+        uint256 ownedTokenIndex = 0;
+
         while (
             ownedTokenIndex < ownerTokenCount && currentTokenId <= maxSupply
         ) {
@@ -165,6 +170,7 @@ contract NFT is ERC721, Ownable {
     }
 
     function whitelistUsers(address[] calldata _users) public onlyOwner {
+        console.log("Changing whitelist now");
         delete whitelistedAddresses;
         whitelistedAddresses = _users;
     }
@@ -178,14 +184,8 @@ contract NFT is ERC721, Ownable {
     }
 
     function withdraw() public payable onlyOwner {
-        // =============================================================================
-
-        // This will payout the owner 100% of the contract balance.
-        // Do not remove this otherwise you will not be able to withdraw the funds.
-        // =============================================================================
         (bool os, ) = payable(owner()).call{value: address(this).balance}("");
         require(os);
-        // =============================================================================
     }
 
     // internal

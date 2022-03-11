@@ -25,6 +25,7 @@ module.exports = {
   solidity: "0.8.4",
   networks: {
     ropsten: {
+      chainId: 4,
       url: process.env.ROPSTEN_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],

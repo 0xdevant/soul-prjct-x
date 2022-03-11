@@ -25,7 +25,7 @@ function IntroText() {
           announcements, giveaways, whitelist opportunities and more.
         </p>
       </div>
-      <ConnectWallet connectWallet={_connectWallet} />
+      {/* <ConnectWallet connectWallet={_connectWallet} /> */}
     </div>
   );
 }
