@@ -1,12 +1,15 @@
 require("dotenv").config();
-
-require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-waffle");
-require("hardhat-gas-reporter");
-require("solidity-coverage");
+require("@nomiclabs/hardhat-ethers");
 
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
+if (process.env.REPORT_GAS) {
+  require("hardhat-gas-reporter");
+}
+
+if (process.env.REPORT_COVERAGE) {
+  require("solidity-coverage");
+}
+
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
 
@@ -15,14 +18,19 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   }
 });
 
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
-
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
+  solidity: {
+    version: "0.8.11",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 800,
+      },
+    },
+  },
   networks: {
     ropsten: {
       chainId: 4,
@@ -32,10 +40,12 @@ module.exports = {
     },
   },
   gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
     currency: "USD",
+    gasPrice: 100,
+    showTimeSpent: true,
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
+  plugins: ["solidity-coverage"],
 };
