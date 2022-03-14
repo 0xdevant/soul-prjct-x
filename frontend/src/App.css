@@ -1,6 +1,14 @@
+:root {
+  --theme: #00b4bd;
+}
+
 @font-face {
   font-family: Ethnocentric;
   src: url(./assets/fonts/ethnocentric.otf);
+}
+
+.text-theme {
+  color: var(--theme);
 }
 
 .special-font {
@@ -8,7 +16,7 @@
 }
 
 .header {
-  border-bottom: 2px solid #00b4bd;
+  border-bottom: 2px solid var(--theme);
 }
 .intro-section {
   background: url("./assets/images/Stars.png") no-repeat;
@@ -28,12 +36,20 @@
   background-image: linear-gradient(180deg, #1c1c1c 0%, #020202 100%);
   border: 1px solid #252525;
 }
+.roadmap {
+  border-radius: 7px;
+  border: 1px solid #707070;
+  background-color: #0f0f0f;
+}
 @media screen and (max-width: 1040px) {
   .video-section {
     background-size: cover;
   }
 }
 @media screen and (max-width: 768px) {
+  .intro-section {
+    min-height: 700px;
+  }
   .video-section {
     background: url("./assets/images/video_section_frame_mobile.png") no-repeat;
     background-size: 100%;
