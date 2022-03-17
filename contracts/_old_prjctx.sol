@@ -1,18 +1,18 @@
 //SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.4;
+pragma solidity >=0.7.0 <0.9.0;
 
-import "erc721a/contracts/ERC721A.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 
-error InvalidMintAmount();
-error MaxSupplyExceeded();
-error WhitelistSaleNotOpen();
-error MerkleProofInvalid();
+import "hardhat/console.sol";
 
-contract PRJCTX is ERC721A, Ownable {
+contract Prjctx is ERC721, Ownable {
     using Strings for uint256;
+    using Counters for Counters.Counter;
+
+    Counters.Counter private supply;
 
     string public uriPrefix = "";
     string public uriSuffix = ".json";
@@ -26,68 +26,52 @@ contract PRJCTX is ERC721A, Ownable {
     bool public revealed = false;
     bool public onlyWhitelisted = false;
 
-    bytes32 public merkleRoot;
+    address[] public whitelistedAddresses;
 
-    mapping(address => bool) public whitelistClaimed;
-
-    constructor() ERC721A("Prjct-x", "PRJCTX") {
+    constructor() ERC721("PRJCT-X", "PRJCTX") {
         setHiddenMetadataUri("ipfs://__CID__/hidden.json");
     }
 
     modifier mintCompliance(uint256 _mintAmount) {
-        if (_mintAmount <= 0 && _mintAmount > maxMintAmountPerTx) {
-            revert InvalidMintAmount();
-        }
-        if (totalSupply() + _mintAmount > maxSupply) {
-            revert MaxSupplyExceeded();
-        }
+        require(
+            _mintAmount > 0 && _mintAmount <= maxMintAmountPerTx,
+            "Invalid mint amount!"
+        );
+        require(
+            supply.current() + _mintAmount <= maxSupply,
+            "Max supply exceeded!"
+        );
         _;
     }
 
-    /**
-     * @dev merkleRoot will need to be set by initializing a merkle tree in order to verify the proof
-     * Check if the merkleproof generated from the user's wallet address
-     * is contained in the leafs of the merkle tree of whitelist
-     */
-    function whiteListMint(bytes32[] calldata _merkleProof, uint256 _mintAmount)
+    function totalSupply() public view returns (uint256) {
+        return supply.current();
+    }
+
+    // public
+    function mint(uint256 _mintAmount)
         public
         payable
         mintCompliance(_mintAmount)
     {
-        require(paused == false, "The contract is paused");
-        if (!onlyWhitelisted) {
-            revert WhitelistSaleNotOpen();
-        }
-        require(
-            whitelistClaimed[msg.sender] == false,
-            "Address has already claimed WL"
-        );
-
-        bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
-        if (MerkleProof.verify(_merkleProof, merkleRoot, leaf) == false) {
-            revert MerkleProofInvalid();
-        }
-        whitelistClaimed[msg.sender] = true;
+        require(!paused, "the contract is paused");
         if (msg.sender != owner()) {
-            require(msg.value >= cost * _mintAmount, "Insufficient funds");
+            if (onlyWhitelisted == true) {
+                require(isWhitelisted(msg.sender), "user is not whitelisted");
+            }
+            require(msg.value >= cost * _mintAmount, "insufficient funds");
         }
-        _safeMint(msg.sender, _mintAmount);
+
+        _mintLoop(msg.sender, _mintAmount);
     }
 
-    function mint(uint256 _mintAmount)
-        external
-        payable
-        mintCompliance(_mintAmount)
-    {
-        require(paused == false, "The contract is paused");
-        if (msg.sender != owner()) {
-            require(msg.value >= cost * _mintAmount, "Insufficient funds");
+    function isWhitelisted(address _user) public view returns (bool) {
+        for (uint256 i = 0; i < whitelistedAddresses.length; i++) {
+            if (whitelistedAddresses[i] == _user) {
+                return true;
+            }
         }
-        _safeMint(msg.sender, _mintAmount);
-    }
-
-    function getOnlyWhiteListedState() public view returns (bool) {
-        return onlyWhitelisted;
+        return false;
     }
 
     function walletOfOwner(address _owner)
@@ -126,7 +110,7 @@ contract PRJCTX is ERC721A, Ownable {
     {
         require(
             _exists(_tokenId),
-            "ERC721AMetadata: URI query for nonexistent token"
+            "ERC721Metadata: URI query for nonexistent token"
         );
 
         if (revealed == false) {
@@ -147,13 +131,6 @@ contract PRJCTX is ERC721A, Ownable {
     }
 
     //only owner
-    /**
-     * for verifying if wallet address is in the whitelist
-     */
-    function setMerkleRoot(bytes32 _merkleRoot) public onlyOwner {
-        merkleRoot = _merkleRoot;
-    }
-
     function setRevealed(bool _state) public onlyOwner {
         revealed = _state;
     }
@@ -192,12 +169,18 @@ contract PRJCTX is ERC721A, Ownable {
         onlyWhitelisted = _state;
     }
 
+    function whitelistUsers(address[] calldata _users) public onlyOwner {
+        console.log("Changing whitelist now");
+        delete whitelistedAddresses;
+        whitelistedAddresses = _users;
+    }
+
     function mintForAddress(uint256 _mintAmount, address _receiver)
         public
         mintCompliance(_mintAmount)
         onlyOwner
     {
-        _safeMint(_receiver, _mintAmount);
+        _mintLoop(_receiver, _mintAmount);
     }
 
     function withdraw() public payable onlyOwner {
@@ -206,6 +189,14 @@ contract PRJCTX is ERC721A, Ownable {
     }
 
     // internal
+
+    function _mintLoop(address _receiver, uint256 _mintAmount) internal {
+        for (uint256 i = 0; i < _mintAmount; i++) {
+            supply.increment();
+            _safeMint(_receiver, supply.current());
+        }
+    }
+
     function _baseURI() internal view virtual override returns (string memory) {
         return uriPrefix;
     }

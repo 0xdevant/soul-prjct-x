@@ -6,11 +6,11 @@ function Header() {
       <picture>
         <source
           media="(min-width: 641px)"
-          srcset="/assets/PRJCT_X_logo_desktop.png"
+          srcSet="/assets/PRJCT_X_logo_desktop.png"
         />
         <source
           media="(max-width: 640px)"
-          srcset="/assets/PRJCT_X_logo_mobile.png"
+          srcSet="/assets/PRJCT_X_logo_mobile.png"
         />
         <img
           src="/assets/PRJCT_X_logo_desktop.png"

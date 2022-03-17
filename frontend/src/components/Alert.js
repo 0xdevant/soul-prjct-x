@@ -6,7 +6,7 @@ function Alert({ type, message, dismiss }) {
       <div
         className={`${
           type === "success" ? "bg-green-200" : "bg-red-200"
-        } rounded-md p-2 text-black w-60 h-20 flex justify-center items-center`}
+        } rounded-md p-2 text-black w-80 h-14 flex justify-center items-center`}
       >
         <button
           type="button"

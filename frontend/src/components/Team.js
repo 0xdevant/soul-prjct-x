@@ -14,11 +14,11 @@ function Team() {
           <picture>
             <source
               media="(min-width: 641px)"
-              srcset="assets/soul_nft_desktop.png"
+              srcSet="assets/soul_nft_desktop.png"
             />
             <source
               media="(max-width: 640px)"
-              srcset="assets/soul_nft_mobile.png"
+              srcSet="assets/soul_nft_mobile.png"
             />
             <img src="assets/soul_nft_desktop.png" alt="SOUL NFT" />
           </picture>
@@ -29,11 +29,11 @@ function Team() {
           <picture>
             <source
               media="(min-width: 641px)"
-              srcset="assets/METABRGE_LOGO_desktop.png"
+              srcSet="assets/METABRGE_LOGO_desktop.png"
             />
             <source
               media="(max-width: 640px)"
-              srcset="assets/METABRGE_LOGO_mobile.png"
+              srcSet="assets/METABRGE_LOGO_mobile.png"
             />
             <img src="assets/METABRGE_LOGO_desktop.png" alt="METABRGE" />
           </picture>

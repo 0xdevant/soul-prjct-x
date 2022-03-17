@@ -14,9 +14,8 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Prjctx = await hre.ethers.getContractFactory("Prjctx");
-  const prjctx = await Prjctx.deploy();
-
+  const PRJCTX = await hre.ethers.getContractFactory("PRJCTX");
+  const prjctx = await PRJCTX.deploy();
   await prjctx.deployed();
 
   console.log("Prjctx deployed to:", prjctx.address);

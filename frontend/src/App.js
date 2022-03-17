@@ -24,9 +24,9 @@ function App() {
 
   return (
     <div className="App bg-black text-white pb-8 flex flex-col space-y-8">
-      {/* {alert && (
+      {alert && (
         <Alert type={alertType} message={alert} dismiss={_dismissError} />
-      )} */}
+      )}
       <Intro />
       <Video />
       <Roadmap />

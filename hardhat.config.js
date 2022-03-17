@@ -32,9 +32,17 @@ module.exports = {
     },
   },
   networks: {
+    mainnet: {
+      chainId: 1,
+      url:
+        `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_KEY}` || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
     ropsten: {
-      chainId: 4,
-      url: process.env.ROPSTEN_URL || "",
+      chainId: 3,
+      url:
+        `https://eth-ropsten.alchemyapi.io/v2/${process.env.ALCHEMY_KEY}` || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
