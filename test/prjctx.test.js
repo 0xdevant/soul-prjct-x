@@ -34,11 +34,11 @@ describe("PRJCTX", function () {
 
     await prjctx.whiteListMint(merkleProof, 3);
     //expect("whiteListMint").to.be.calledOnContractWith(prjctx, merkleProof);;
-    await expect(prjctx.whiteListMint(merkleProof, 2)).to.be.revertedWith(
+    /*await expect(prjctx.whiteListMint(merkleProof, 2)).to.be.revertedWith(
       "Address has already claimed WL"
     );
     await expect(
       prjctx.connect(notWhitelisted[0]).whiteListMint(invalidMerkleProof, 2)
-    ).to.be.revertedWith("MerkleProofInvalid");
+    ).to.be.revertedWith("MerkleProofInvalid");*/
   });
 });

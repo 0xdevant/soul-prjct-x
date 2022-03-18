@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "hardhat/console.sol";
 
-contract Prjctx is ERC721, Ownable {
+contract OLDprjctx is ERC721, Ownable {
     using Strings for uint256;
     using Counters for Counters.Counter;
 
