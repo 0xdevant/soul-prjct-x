@@ -30,7 +30,7 @@ contract PRJCTX is ERC721A, Ownable {
 
     mapping(address => bool) public whitelistClaimed;
 
-    constructor() ERC721A("Prjct-x", "PRJCTX") {
+    constructor() ERC721A("PRJCT-X", "PRJCTX") {
         setHiddenMetadataUri("ipfs://__CID__/hidden.json");
     }
 
@@ -80,6 +80,7 @@ contract PRJCTX is ERC721A, Ownable {
         mintCompliance(_mintAmount)
     {
         require(paused == false, "The contract is paused");
+        require(onlyWhitelisted == false, "Minting open to whitelist only");
         if (msg.sender != owner()) {
             require(msg.value >= cost * _mintAmount, "Insufficient funds");
         }

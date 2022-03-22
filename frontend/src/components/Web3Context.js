@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { ethers } from "ethers";
 
-//import PRJCTX from "../../artifacts/contracts/PRJCTX.sol/PRJCTX.json";
+import PRJCTX from "../contracts/contracts/PRJCTX.sol/PRJCTX.json";
 
 export const Web3Context = createContext();
 //const oneEther = ethers.BigNumber.from("1000000000000000000");
@@ -9,8 +9,9 @@ export const Web3Context = createContext();
 const Web3Provider = ({ children }) => {
   const HARDHAT_CHAIN_ID = "0x7a69";
   const ETHEREUM_ROPSTEN_CHAIN_ID = "0x3";
+  const ETHEREUM_RINKEBY_CHAIN_ID = "0x4";
   const ETHEREUM_MAINNET_CHAIN_ID = "0x1";
-  const CURRENT_CHAIN_ID = "0x7a69";
+  const CURRENT_CHAIN_ID = "0x3";
 
   const [provider, setProvider] = useState(undefined);
   const [contract, setContract] = useState(undefined);
@@ -84,18 +85,16 @@ const Web3Provider = ({ children }) => {
     if (chainId === HARDHAT_CHAIN_ID) {
       contractAddress = "";
     } else if (chainId === ETHEREUM_ROPSTEN_CHAIN_ID) {
-      contractAddress = "";
+      contractAddress = "0x1ba56371bDD9FD4ceF5eE54239a34b78B447526c";
+    } else if (chainId === ETHEREUM_RINKEBY_CHAIN_ID) {
+      contractAddress = "0x2B68Cf203E95b20927ea50992438651C23158094";
     } else if (chainId === ETHEREUM_MAINNET_CHAIN_ID) {
       contractAddress = "";
     }
-    /*const contract = new ethers.Contract(
-        contractAddress,
-        PRJCTX.abi,
-        signer
-    );*/
+    const contract = new ethers.Contract(contractAddress, PRJCTX.abi, signer);
 
     setProvider(provider);
-    setContract("");
+    setContract(contract);
     setAccount(userAddress);
   }
 

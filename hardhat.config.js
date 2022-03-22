@@ -1,6 +1,8 @@
 require("dotenv").config();
+const path = require("path");
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-ethers");
+require("@nomiclabs/hardhat-etherscan");
 
 if (process.env.REPORT_GAS) {
   require("hardhat-gas-reporter");
@@ -31,6 +33,9 @@ module.exports = {
       },
     },
   },
+  paths: {
+    artifacts: path.join(__dirname, "frontend/src/contracts"),
+  },
   networks: {
     mainnet: {
       chainId: 1,
@@ -43,6 +48,13 @@ module.exports = {
       chainId: 3,
       url:
         `https://eth-ropsten.alchemyapi.io/v2/${process.env.ALCHEMY_KEY}` || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    rinkeby: {
+      chainId: 4,
+      url:
+        `https://eth-rinkeby.alchemyapi.io/v2/${process.env.ALCHEMY_KEY}` || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },

@@ -3,7 +3,7 @@ import { ConnectWallet } from "../ConnectWallet";
 import { Web3Context } from "../Web3Context";
 
 function IntroText() {
-  // const { _connectWallet } = useContext(Web3Context);
+  // const { account, _connectWallet } = useContext(Web3Context);
 
   return (
     <div className="hidden md:flex flex-col space-y-8 flex-none bg-black w-[40%]">
@@ -25,7 +25,9 @@ function IntroText() {
           announcements, giveaways, whitelist opportunities and more.
         </p>
       </div>
-      {/* <ConnectWallet connectWallet={_connectWallet} /> */}
+      {/* <div className="text-center">
+        {account || <ConnectWallet connectWallet={_connectWallet} />}
+      </div> */}
     </div>
   );
 }
