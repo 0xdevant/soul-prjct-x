@@ -1,5 +1,6 @@
 :root {
-  --theme: #00b4bd;
+  --main: #00b4bd;
+  --secondary: #0f0f0f;
 }
 
 @font-face {
@@ -7,8 +8,17 @@
   src: url(./assets/fonts/ethnocentric.otf);
 }
 
-.text-theme {
-  color: var(--theme);
+button {
+  @apply rounded-md px-4 py-2 text-white;
+  background-color: var(--main);
+}
+
+.bg-main-theme {
+  background-color: var(--main);
+}
+
+.bg-secondary-theme {
+  background-color: var(--secondary);
 }
 
 .special-font {
@@ -16,7 +26,7 @@
 }
 
 .header {
-  border-bottom: 2px solid var(--theme);
+  border-bottom: 2px solid var(--main);
 }
 .intro-section {
   background: url("./assets/images/Stars.png") no-repeat;

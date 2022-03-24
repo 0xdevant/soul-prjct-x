@@ -19,7 +19,7 @@ const Web3Provider = ({ children }) => {
   const [alertType, setAlertType] = useState("error");
   const [alert, setAlert] = useState(undefined);
 
-  // To fetch user account if already connected previously
+  // Fetch user account if already connected previously
   useEffect(() => {
     async function fetchConnectedETH() {
       if (window.ethereum === undefined) {
@@ -38,7 +38,7 @@ const Web3Provider = ({ children }) => {
     if (window.ethereum === undefined) {
       return;
     }
-    // We reinitialize it whenever the user changes their account.
+    // Reinitialize it whenever the user changes their account.
     window.ethereum.on("accountsChanged", ([newAddress]) => {
       if (newAddress === undefined) {
         return _resetState();
@@ -47,7 +47,7 @@ const Web3Provider = ({ children }) => {
       _initialize(newAddress);
     });
 
-    // We reset the site state if the network is changed
+    // Reset the site state if the network is changed
     window.ethereum.on("chainChanged", (chainId) => {
       console.log(`Network ID changed to: ${chainId}`);
       _resetState();
@@ -58,27 +58,28 @@ const Web3Provider = ({ children }) => {
     // Ethereum wallets inject the window.ethereum object. If it hasn't been
     // injected, we instruct the user to install MetaMask.
     if (window.ethereum === undefined) {
-      console.log("Please install MetaMask!");
       setAlertType("error");
       setAlert("Please install MetaMask!");
+      return;
+    }
+
+    // Checks if selected network is on desired network
+    const chainId = await window.ethereum.request({ method: "eth_chainId" });
+    if (!_checkNetwork(chainId)) {
+      _resetState();
+      setAlert(`Please switch to network ID ${CURRENT_CHAIN_ID}`);
       return;
     }
 
     const [selectedAddress] = await window.ethereum.request({
       method: "eth_requestAccounts",
     });
-    const chainId = await window.ethereum.request({ method: "eth_chainId" });
-
-    // Once we have the address, we can initialize the application.
-    // First we check the network
-    if (!_checkNetwork(chainId)) {
-      return;
-    }
-
-    _initialize(selectedAddress, chainId);
+    _initialize(selectedAddress);
   }
 
-  function _initialize(userAddress, chainId) {
+  async function _initialize(userAddress) {
+    // Get the current chainId, invoke the corresponding contract
+    const chainId = await window.ethereum.request({ method: "eth_chainId" });
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     let contractAddress;
@@ -111,13 +112,11 @@ const Web3Provider = ({ children }) => {
     setAlert(undefined);
   }
 
-  // This method checks if Metamask selected network is on desired network
+  // Checks if selected network is on desired network
   function _checkNetwork(chainId) {
     if (chainId === CURRENT_CHAIN_ID) {
       return true;
     }
-    setAlertType("error");
-    setAlert(`Please switch to network ID ${CURRENT_CHAIN_ID}`);
 
     return false;
   }

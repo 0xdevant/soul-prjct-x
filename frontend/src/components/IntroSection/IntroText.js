@@ -1,10 +1,7 @@
-import React, { useContext } from "react";
-import { ConnectWallet } from "../ConnectWallet";
-import { Web3Context } from "../Web3Context";
+import React from "react";
+import MintBox from "../MintBox";
 
 function IntroText() {
-  // const { account, _connectWallet } = useContext(Web3Context);
-
   return (
     <div className="hidden md:flex flex-col space-y-8 flex-none bg-black w-[40%]">
       <div className="md:p-12 lg:p-16 flex flex-col justify-center space-y-6 border-y my-4 md:my-0 text-xl">
@@ -25,9 +22,7 @@ function IntroText() {
           announcements, giveaways, whitelist opportunities and more.
         </p>
       </div>
-      {/* <div className="text-center">
-        {account || <ConnectWallet connectWallet={_connectWallet} />}
-      </div> */}
+      {/* <MintBox /> */}
     </div>
   );
 }
