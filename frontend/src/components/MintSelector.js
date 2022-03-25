@@ -30,7 +30,7 @@ function MintSelector() {
     try {
       await contract.mint(mintAmount, {
         value: ethers.utils.parseEther((MINT_PRICE * mintAmount).toString()),
-        gasLimit: 50000,
+        gasLimit: 80000,
       });
     } catch (err) {
       console.log(err);

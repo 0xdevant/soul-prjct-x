@@ -8,7 +8,9 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 
 error InvalidMintAmount();
 error MaxSupplyExceeded();
-error WhitelistSaleNotOpen();
+error MintPaused();
+error WhitelistMintNotOpen();
+error NormalMintNotOpen();
 error MerkleProofInvalid();
 
 contract PRJCTX is ERC721A, Ownable {
@@ -18,7 +20,7 @@ contract PRJCTX is ERC721A, Ownable {
     string public uriSuffix = ".json";
     string public hiddenMetadataUri;
 
-    uint256 public cost = 0.1 ether;
+    uint256 public cost = 0.08 ether;
     uint256 public maxSupply = 2022;
     uint256 public maxMintAmountPerTx = 20;
 
@@ -54,10 +56,9 @@ contract PRJCTX is ERC721A, Ownable {
         payable
         mintCompliance(_mintAmount)
     {
-        require(paused == false, "The contract is paused");
-        if (!onlyWhitelisted) {
-            revert WhitelistSaleNotOpen();
-        }
+        if (paused) revert MintPaused();
+        if (!onlyWhitelisted) revert WhitelistMintNotOpen();
+
         require(
             whitelistClaimed[msg.sender] == false,
             "Address has already claimed WL"
@@ -79,8 +80,8 @@ contract PRJCTX is ERC721A, Ownable {
         payable
         mintCompliance(_mintAmount)
     {
-        require(paused == false, "The contract is paused");
-        require(onlyWhitelisted == false, "Minting open to whitelist only");
+        if (paused) revert MintPaused();
+        if (onlyWhitelisted) revert NormalMintNotOpen();
         if (msg.sender != owner()) {
             require(msg.value >= cost * _mintAmount, "Insufficient funds");
         }
@@ -149,7 +150,7 @@ contract PRJCTX is ERC721A, Ownable {
 
     //only owner
     /**
-     * for verifying if wallet address is in the whitelist
+     * use Merkle Tree to verify if wallet address is in the whitelist
      */
     function setMerkleRoot(bytes32 _merkleRoot) public onlyOwner {
         merkleRoot = _merkleRoot;
@@ -202,8 +203,10 @@ contract PRJCTX is ERC721A, Ownable {
     }
 
     function withdraw() public payable onlyOwner {
-        (bool os, ) = payable(owner()).call{value: address(this).balance}("");
-        require(os);
+        (bool success, ) = payable(owner()).call{value: address(this).balance}(
+            ""
+        );
+        require(success, "Failed to withdraw");
     }
 
     // internal
