@@ -25,6 +25,10 @@ button {
   font-family: Ethnocentric;
 }
 
+.text-theme {
+  color: var(--main);
+}
+
 .header {
   border-bottom: 2px solid var(--main);
 }
@@ -46,10 +50,43 @@ button {
   background-image: linear-gradient(180deg, #1c1c1c 0%, #020202 100%);
   border: 1px solid #252525;
 }
+.roadmap-section {
+  background: url("./assets/images/roadmap_section_desktop.png") no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+.roadmap-planets {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+}
 .roadmap {
   border-radius: 7px;
   border: 1px solid #707070;
-  background-color: #0f0f0f;
+  border-top: 4px solid #00abb1;
+  background-color: #070707;
+}
+.roadmap::before {
+  content: "";
+  background: url(./assets/images/roadmap_border.png) no-repeat;
+  background-size: 100%;
+  background-position: center center;
+  width: 313px;
+  height: 43px;
+  left: -340px;
+  position: absolute;
+  z-index: 2;
+}
+.roadmap::after {
+  content: "";
+  background-color: #00b4bd;
+  width: 4px;
+  height: 130%;
+  left: -286px;
+  position: absolute;
+  z-index: 1;
 }
 @media screen and (max-width: 1040px) {
   .video-section {
@@ -64,5 +101,24 @@ button {
     background: url("./assets/images/video_section_frame_mobile.png") no-repeat;
     background-size: 100%;
     background-position: center center;
+  }
+  .roadmap-section {
+    background: url("./assets/images/roadmap_section_mobile.png") no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+  .roadmap::before {
+    content: "";
+    background: url(./assets/images/roadmap_border_mobile.png) no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    width: 67px;
+    height: 15px;
+    left: -54px;
+  }
+  .roadmap::after {
+    content: "";
+    width: 2px;
+    left: -26px;
   }
 }
