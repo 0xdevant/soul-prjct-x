@@ -51,7 +51,7 @@ function MintSelector() {
         <option value="3">3</option>
         <option value="4">4</option>
       </select>
-      <button className="" onClick={mint}>
+      <button className="mint-button" onClick={mint}>
         Mint Now
       </button>
     </div>

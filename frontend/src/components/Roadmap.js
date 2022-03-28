@@ -3,7 +3,10 @@ import RoadmapBlocks from "./RoadmapBlocks";
 
 function Roadmap() {
   return (
-    <div className="roadmap-section p-10 sm:pb-32 flex flex-col justify-center items-center space-y-8 relative">
+    <div
+      className="roadmap-section p-10 sm:pb-32 flex flex-col justify-center items-center space-y-8 relative"
+      id="roadmap"
+    >
       <img
         className="absolute z-0 roadmap-planets"
         src="assets/roadmap_planets.png"

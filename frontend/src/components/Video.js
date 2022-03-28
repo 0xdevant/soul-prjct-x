@@ -2,7 +2,7 @@ import React from "react";
 
 function Video() {
   return (
-    <div className="video-section">
+    <div className="video-section" id="about">
       <div className="px-12 py-8 md:p-8 md:w-3/5 lg:w-2/5 mx-auto">
         <div className="flex flex-col">
           <div className="video-player">

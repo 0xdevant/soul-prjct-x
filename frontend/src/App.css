@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --main: #00b4bd;
   --secondary: #0f0f0f;
@@ -8,7 +12,7 @@
   src: url(./assets/fonts/ethnocentric.otf);
 }
 
-button {
+button.mint-button {
   @apply rounded-md px-4 py-2 text-white;
   background-color: var(--main);
 }
@@ -31,6 +35,26 @@ button {
 
 .header {
   border-bottom: 2px solid var(--main);
+}
+.mobile-navbar-toggle-icon {
+  background: url("./assets/images/nav-button.png") no-repeat;
+  background-size: 100%;
+  display: block;
+  width: 44px;
+  height: 44px;
+}
+.mobile-navbar-toggle-icon.active {
+  background: url("./assets/images/nav-close-button.png") no-repeat;
+  background-size: 100%;
+  display: block;
+  width: 44px;
+  height: 44px;
+}
+.mobile-navbar > a {
+  padding: 2em;
+}
+.mobile-navbar > a:not(:last-child) {
+  border-bottom: 2px solid #00b4bd;
 }
 .intro-section {
   background: url("./assets/images/Stars.png") no-repeat;
@@ -120,5 +144,10 @@ button {
     content: "";
     width: 2px;
     left: -26px;
+  }
+}
+@media screen and (min-width: 769px) {
+  .mobile-navbar {
+    display: none;
   }
 }

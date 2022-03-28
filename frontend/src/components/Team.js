@@ -2,7 +2,7 @@ import React from "react";
 
 function Team() {
   return (
-    <div className="team-section">
+    <div className="team-section" id="team">
       <div className="md:w-3/5 lg:w-2/5 mx-auto flex flex-col justify-center items-center space-y-10 sm:space-y-16 p-8 text-center">
         <div className="flex flex-col space-y-8 justify-center items-center w-full sm:w-4/5">
           <p className="text-3xl special-font">TEAM</p>

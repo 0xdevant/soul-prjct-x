@@ -3,7 +3,7 @@ import React from "react";
 function Socials() {
   return (
     <>
-      <div className="social-section">
+      <div className="social-section" id="follow-us">
         <div className="flex flex-col space-y-4 text-sm justify-center items-center p-8">
           <p>CONNECT WITH US ON</p>
           <div className="flex justify-center items-center space-x-4">
