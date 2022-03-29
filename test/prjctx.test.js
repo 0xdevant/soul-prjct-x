@@ -10,9 +10,6 @@ describe("PRJCTX", function () {
     const PRJCTX = await ethers.getContractFactory("PRJCTX");
     prjctx = await PRJCTX.deploy();
     await prjctx.deployed();
-
-    // activiate the mint
-    await prjctx.setPaused(false);
   });
 
   /*it("allow only whitelisted accounts to mint and with correct amount of Ethers", async () => {
@@ -31,12 +28,13 @@ describe("PRJCTX", function () {
       keccak256(notWhitelisted[0].address)
     );
 
-    await prjctx.setOnlyWhitelisted(true);
+    // enable whitelist mint
+    await prjctx.setWhitelistMintEnabled(true);
 
     // mint without paying ether
     await expect(
       prjctx.connect(whitelisted[2]).whiteListMint(merkleProof, 3)
-    ).to.be.revertedWith("Insufficient funds");
+    ).to.be.revertedWith("Insufficient funds!");
 
     // mint with correct amount of ether
     await prjctx.connect(whitelisted[2]).whiteListMint(merkleProof, 3, {
@@ -45,24 +43,28 @@ describe("PRJCTX", function () {
 
     await expect(
       prjctx.connect(whitelisted[2]).whiteListMint(merkleProof, 2)
-    ).to.be.revertedWith("Address has already claimed WL");
+    ).to.be.revertedWith("Address already claimed!");
 
     await expect(
       prjctx.connect(notWhitelisted[0]).whiteListMint(invalidMerkleProof, 2)
-    ).to.be.revertedWith("MerkleProofInvalid");
+    ).to.be.revertedWith("Invalid proof!");
   });*/
 
   it("not allow normal mint while whitelist mint is open", async () => {
     const accounts = await hre.ethers.getSigners();
     const testAccounts = accounts.slice(0, 5); // account 1 - 5
 
-    await prjctx.setOnlyWhitelisted(true);
-    /*expect(prjctx.connect(testAccounts[2]).mint(3)).to.be.revertedWith(
-      "NormalMintNotOpen"
-    );*/
+    // enable whitelist mint
+    await prjctx.setWhitelistMintEnabled(true);
+    expect(prjctx.connect(testAccounts[2]).mint(3)).to.be.revertedWith(
+      "The contract is paused!"
+    );
   });
 
-  it("get error when mint amount is less than equal 0 or more than 20, or total supply exceeds max supply", async () => {
+  it("not allow when mint amount is less than equal 0 or more than 20, or total supply exceeds max supply", async () => {
+    // enable public mint
+    await prjctx.setPaused(false);
+
     const accounts = await hre.ethers.getSigners();
     const testAccounts = accounts.slice(0, 400); // account 1 - 400
 
