@@ -48,7 +48,7 @@ contract PRJCTX is ERC721A, Ownable {
     /**
      * @dev merkleRoot will need to be set by initializing a merkle tree in order to verify the proof
      * Check if the merkleproof generated from the user's wallet address
-     * is contained in the leafs of the merkle tree of whitelist
+     * is contained in the leafs of the merkle tree of whitelist addresses
      */
     function whiteListMint(bytes32[] calldata _merkleProof, uint256 _mintAmount)
         public
