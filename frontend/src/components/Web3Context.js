@@ -86,9 +86,9 @@ const Web3Provider = ({ children }) => {
     if (chainId === HARDHAT_CHAIN_ID) {
       contractAddress = "";
     } else if (chainId === ETHEREUM_ROPSTEN_CHAIN_ID) {
-      contractAddress = "0x1ba56371bDD9FD4ceF5eE54239a34b78B447526c";
+      contractAddress = "0x7BD2288286D01E29b295db2F1386b358ed89D886";
     } else if (chainId === ETHEREUM_RINKEBY_CHAIN_ID) {
-      contractAddress = "0x2B68Cf203E95b20927ea50992438651C23158094";
+      contractAddress = "0x3c8a4331121E01cC976Ed7A86E953dAAfA84dc6E";
     } else if (chainId === ETHEREUM_MAINNET_CHAIN_ID) {
       contractAddress = "";
     }
