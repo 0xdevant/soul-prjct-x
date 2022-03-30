@@ -33,9 +33,6 @@ module.exports = {
       },
     },
   },
-  paths: {
-    artifacts: path.join(__dirname, "frontend/src/contracts"),
-  },
   networks: {
     mainnet: {
       chainId: 1,

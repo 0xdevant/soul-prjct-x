@@ -18,7 +18,7 @@ contract PRJCTX is ERC721A, Ownable {
 
     uint256 public cost = 0.08 ether;
     uint256 public maxSupply = 2022;
-    uint256 public maxMintAmountPerTx = 20;
+    uint256 public maxMintAmountPerTx = 2;
 
     bool public paused = true;
     bool public whitelistMintEnabled = false;

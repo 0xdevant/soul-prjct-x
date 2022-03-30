@@ -1,17 +1,20 @@
 import { createContext, useState, useEffect } from "react";
 import { ethers } from "ethers";
 
-import PRJCTX from "../contracts/contracts/PRJCTX.sol/PRJCTX.json";
+const ContractAbi =
+  require("../../../artifacts/contracts/PRJCTX.sol/PRJCTX.json").abi;
 
 export const Web3Context = createContext();
-//const oneEther = ethers.BigNumber.from("1000000000000000000");
 
 const Web3Provider = ({ children }) => {
   const HARDHAT_CHAIN_ID = "0x7a69";
-  const ETHEREUM_ROPSTEN_CHAIN_ID = "0x3";
-  const ETHEREUM_RINKEBY_CHAIN_ID = "0x4";
-  const ETHEREUM_MAINNET_CHAIN_ID = "0x1";
+  const ETH_ROPSTEN_CHAIN_ID = "0x3";
+  const ETH_RINKEBY_CHAIN_ID = "0x4";
+  const ETH_MAINNET_CHAIN_ID = "0x1";
   const CURRENT_CHAIN_ID = "0x3";
+  const ROPSTEN_CONTRACT_ADDRESS = "0x881bf6adF7c44e356812Ed314a9ab94B4B950595";
+  const RINKEBY_CONTRACT_ADDRESS = "0xe37C9673D76A65dFE2AD3aCe160672985c02E9fD";
+  const ETH_CONTRACT_ADDRESS = "";
 
   const [provider, setProvider] = useState(undefined);
   const [contract, setContract] = useState(undefined);
@@ -85,14 +88,14 @@ const Web3Provider = ({ children }) => {
     let contractAddress;
     if (chainId === HARDHAT_CHAIN_ID) {
       contractAddress = "";
-    } else if (chainId === ETHEREUM_ROPSTEN_CHAIN_ID) {
-      contractAddress = "0x5E4a3c58e50ef8A49DbdF96BdD8eD604F18eeaAe";
-    } else if (chainId === ETHEREUM_RINKEBY_CHAIN_ID) {
-      contractAddress = "0x4935d96708cF6156763E1f2265eaa1F0E33B47E4";
-    } else if (chainId === ETHEREUM_MAINNET_CHAIN_ID) {
-      contractAddress = "";
+    } else if (chainId === ETH_ROPSTEN_CHAIN_ID) {
+      contractAddress = ROPSTEN_CONTRACT_ADDRESS;
+    } else if (chainId === ETH_RINKEBY_CHAIN_ID) {
+      contractAddress = RINKEBY_CONTRACT_ADDRESS;
+    } else if (chainId === ETH_MAINNET_CHAIN_ID) {
+      contractAddress = ETH_CONTRACT_ADDRESS;
     }
-    const contract = new ethers.Contract(contractAddress, PRJCTX.abi, signer);
+    const contract = new ethers.Contract(contractAddress, ContractAbi, signer);
 
     setProvider(provider);
     setContract(contract);

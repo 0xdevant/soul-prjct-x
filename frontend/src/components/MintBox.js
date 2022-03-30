@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { ConnectWallet } from "./ConnectWallet";
-import MintSelector from "./MintSelector";
+import MintWidget from "./MintWidget";
 import { Web3Context } from "./Web3Context";
 
 function MintBox() {
@@ -26,7 +26,7 @@ function MintBox() {
           <div className="">DATE</div>
         </div>
         {!account && <ConnectWallet connectWallet={_connectWallet} />}
-        {account && <MintSelector />}
+        {account && <MintWidget />}
       </div>
     </div>
   );
