@@ -33,6 +33,9 @@ module.exports = {
       },
     },
   },
+  paths: {
+    artifacts: "./frontend/src/artifacts",
+  },
   networks: {
     mainnet: {
       chainId: 1,

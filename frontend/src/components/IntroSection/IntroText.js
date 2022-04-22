@@ -22,7 +22,7 @@ function IntroText() {
           announcements, giveaways, whitelist opportunities and more.
         </p>
       </div>
-      {/* <MintBox /> */}
+      <MintBox />
     </div>
   );
 }

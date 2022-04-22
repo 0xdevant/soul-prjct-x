@@ -1,8 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { ethers } from "ethers";
-
-const ContractAbi =
-  require("../../../artifacts/contracts/PRJCTX.sol/PRJCTX.json").abi;
+import PRJCTX from "../artifacts/contracts/Prjctx.sol/PRJCTX.json";
 
 export const Web3Context = createContext();
 
@@ -57,6 +55,12 @@ const Web3Provider = ({ children }) => {
     });
   });
 
+  async function _signMessage() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    signer.signMessage("Hello world");
+  }
+
   async function _connectWallet() {
     // Ethereum wallets inject the window.ethereum object. If it hasn't been
     // injected, we instruct the user to install MetaMask.
@@ -95,7 +99,7 @@ const Web3Provider = ({ children }) => {
     } else if (chainId === ETH_MAINNET_CHAIN_ID) {
       contractAddress = ETH_CONTRACT_ADDRESS;
     }
-    const contract = new ethers.Contract(contractAddress, ContractAbi, signer);
+    const contract = new ethers.Contract(contractAddress, PRJCTX.abi, signer);
 
     setProvider(provider);
     setContract(contract);
@@ -138,6 +142,7 @@ const Web3Provider = ({ children }) => {
         _connectWallet,
         _dismissError,
         _resetState,
+        _signMessage,
       }}
     >
       {children}
