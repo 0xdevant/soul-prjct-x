@@ -1,5 +1,5 @@
 require("dotenv").config();
-const path = require("path");
+
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-etherscan");
