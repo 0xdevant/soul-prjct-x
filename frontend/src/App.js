@@ -4,7 +4,7 @@ import "./App.css";
 import Alert from "./components/Alert";
 import Intro from "./components/Intro";
 import Roadmap from "./components/Roadmap";
-import Socials from "./components/Socials";
+import Footer from "./components/Footer";
 import Team from "./components/Team";
 import Video from "./components/Video";
 import { Web3Context } from "./components/Web3Context";
@@ -23,16 +23,18 @@ function App() {
   } = useContext(Web3Context);
 
   return (
-    <div className="App bg-black text-white pb-8 flex flex-col space-y-8">
+    <>
       {alert && (
         <Alert type={alertType} message={alert} dismiss={_dismissError} />
       )}
-      <Intro />
-      <Video />
-      <Roadmap />
-      <Team />
-      <Socials />
-    </div>
+      <div className="App bg-black text-white pb-8 flex flex-col space-y-8">
+        <Intro />
+        <Video />
+        <Roadmap />
+        <Team />
+        <Footer />
+      </div>
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import RoadmapBlocks from "./RoadmapBlocks";
+import RoadmapBlocks from "./RoadmapSection/RoadmapBlocks";
 
 function Roadmap() {
   return (

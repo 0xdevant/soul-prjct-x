@@ -1,6 +1,6 @@
 import React from "react";
 
-function Socials() {
+function Footer() {
   return (
     <>
       <div className="social-section" id="follow-us">
@@ -36,4 +36,4 @@ function Socials() {
   );
 }
 
-export default Socials;
+export default Footer;

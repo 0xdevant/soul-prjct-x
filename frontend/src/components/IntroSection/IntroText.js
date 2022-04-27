@@ -1,5 +1,5 @@
 import React from "react";
-import MintBox from "../MintBox";
+import MintWidget from "../MintSection/MintWidget";
 
 function IntroText() {
   return (
@@ -22,7 +22,7 @@ function IntroText() {
           announcements, giveaways, whitelist opportunities and more.
         </p>
       </div>
-      <MintBox />
+      <MintWidget />
     </div>
   );
 }
