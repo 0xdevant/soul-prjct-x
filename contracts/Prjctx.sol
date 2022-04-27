@@ -25,7 +25,7 @@ contract PRJCTX is ERC721A, Ownable {
     bool public revealed = false;
 
     constructor() ERC721A("PRJCT-X", "PRJCTX") {
-        setHiddenMetadataUri("ipfs://QmaNJq7iLYKYkEJXFxbjTXp7Xucs1v39hpe82zRa8XJvtY/hidden.json");
+        setHiddenMetadataUri("ipfs://__CID__/hidden.json");
     }
 
     modifier mintCompliance(uint256 _mintAmount) {
